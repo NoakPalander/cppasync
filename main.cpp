@@ -8,6 +8,7 @@
 #include <thread>       // std::thread, std::this_thread, std::launch
 #include <chrono>       // std::chrono_literals, steadyclock, duration_cast
 #include <future>       // std::future
+#include <iostream>
 
 // Returns a vector filled with random values determained by the generator
 template<typename T>
@@ -17,7 +18,7 @@ std::vector<T> GenRandom(std::function<T(void)> const& generator, std::size_t qu
     std::vector<T> results{};
     std::generate_n(std::back_inserter(results), quantity, [&generator, &id, &quantity, index = 1]() mutable { 
         fmt::print("[ID: {}] Polling random number {}/{}!\n", id, index++, quantity);
-        fflush(stdout);
+        std::cout.flush();
 
         std::this_thread::sleep_for(500ms);
         return generator();
